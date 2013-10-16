@@ -1,0 +1,81 @@
+\makeatletter
+% Une commande sembleble à \rlap ou \llap, mais centrant son argument
+\def\clap#1{\hbox to 0pt{\hss #1\hss}}%
+% Une commande centrant son contenu (à utiliser en mode vertical)
+\def\ligne#1{%
+  \hbox to \hsize{%
+    \vbox{\centering #1}}}%
+% Une comande qui met son premier argument à gauche, le second au 
+% milieu et le dernier à droite, la première ligne ce chacune de ces
+% trois boites coïncidant
+\def\haut#1#2#3{%
+  \hbox to \hsize{%
+    \rlap{\vtop{\raggedright #1}}%
+    \hss
+    \clap{\vtop{\centering #2}}%
+    \hss
+    \llap{\vtop{\raggedleft #3}}}}%
+% Idem, mais cette fois-ci, c'est la dernière ligne
+\def\bas#1#2#3{%
+  \hbox to \hsize{%
+    \rlap{\vbox{\raggedright #1}}%
+    \hss
+    \clap{\vbox{\centering #2}}%
+    \hss
+    \llap{\vbox{\raggedleft #3}}}}%
+% La commande \maketitle
+\def\maketitle{%
+  \thispagestyle{empty}\vbox to \vsize{%
+    \haut{}{\textsc{Université du Québec à Montréal}}{}
+    \vfill
+    \ligne{\textsc{\@title}}
+    \vfill
+    \ligne{\textsc{\@typetravail}}
+    \ligne{\textsc{présenté à}}
+    \ligne{\textsc{\@prof}}
+    \ligne{\textsc{dans le cadre du cours}}
+    \ligne{\textsc{\@cours}}
+    \ligne{\textsc{groupe \@groupecours}}
+    \vfill
+    \ligne{\textsc{par}}
+    \ligne{\textsc{\@author}}
+    \ligne{\textsc{\@codepermanent}}
+    \ifthenelse{\equal{\@autresauteurs}{}}{}{
+        \ligne{\textsc{\\\@autresauteurs}}
+    }
+    \vfill
+    \bas{}{\textsc{\@date}}{}
+    }%
+  \cleardoublepage
+  }
+\newdateformat{moisannee}{\monthname[\THEMONTH] \THEYEAR}
+% Les commandes permettant de définir la date, le lieu, etc.
+\def\date#1{\def\@date{#1}}
+\def\author#1{\def\@author{#1}}
+\def\autresauteurs#1{\def\@autresauteurs{#1}}
+\def\codepermanent#1{\def\@codepermanent{#1}}
+\def\title#1{\def\@title{#1}}
+\def\typetravail#1{\def\@typetravail{#1}}
+\def\prof#1{\def\@prof{#1}}
+\def\cours#1{\def\@cours{#1}}
+\def\groupecours#1{\def\@groupecours{#1}}
+% Valeurs par défaut
+\date{\moisannee\today}
+\author{}
+\autresauteurs{}
+\codepermanent{}
+\title{}
+\typetravail{Travail}
+\prof{}
+\cours{}
+\groupecours{}
+\makeatother
+  \title{Ventes de la pépinière Plein de Foin}
+  \typetravail{Rapport de TP}
+  \author{Mathieu Trudel-Lapierre}
+  \autresauteurs{Alex Leblanc\\LEBA00000000}
+  \codepermanent{TRUM18068508}
+  \prof{Robert Godin}
+  \cours{INF3180}
+  \groupecours{31}
+\maketitle
